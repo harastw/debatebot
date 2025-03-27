@@ -10,14 +10,43 @@ import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ApplicationFX extends Application {
+	private VBox vbox;
+	
+	private void updateUI(DialogNode node) {
+		HBox hbox = new HBox(50);
 
+		ArrayList<Answer> answers;
+		answers = node.GetAnswers();
+		for (int i = 0; i < node.GetAnswers().size(); i++) {
+			Answer currentAnswer = answers.get(i);
+            Button yourTake = new Button(currentAnswer.text);
+            yourTake.setOnAction(event -> {
+            	disableOldButtons(hbox);
+            	updateUI(currentAnswer.node); 
+            });
+            hbox.getChildren().add(yourTake);
+		}
+		Label botTake = new Label(node.GetText());
+		vbox.getChildren().add(botTake);
+		vbox.getChildren().add(hbox);
+	}
+	
+	private void disableOldButtons(HBox hbox) {
+        for (int i = 0; i < hbox.getChildren().size(); i++) {
+            if (hbox.getChildren().get(i) instanceof Button) {
+                Button button = (Button) hbox.getChildren().get(i);
+                button.setDisable(true);
+            }
+        }
+    }
+	
 	@Override
     public void start(Stage stage) throws Exception {
+		vbox = new VBox(10);
+		
 		DialogNode mainNode = new DialogNode("Do you have a question?", false);
 		
 		DialogNode socialismCounter = new DialogNode("nazi is not marxoid", false);
@@ -32,25 +61,10 @@ public class ApplicationFX extends Application {
 		Answer argumentFromMarket = new Answer("no free market btw", marketCounter);
 		socialismCounter.AddAnswer(argumentFromMarket);
 		
-		DialogNode node = mainNode;
-		Boolean isCurrentNodeLast = node.isLast;
-		ArrayList<Answer> answers;
 		
-		HBox hbox = new HBox();
-		VBox vbox = new VBox();
-        hbox.setSpacing(100);
-		for (int i = 0; i < mainNode.GetAnswers().size(); i++) {
-            String labelText = mainNode.GetAnswers().get(i).text;
-            Button yourTake = new Button(labelText);
-            String iString = Integer.toString(i);
-            yourTake.setOnAction(event -> System.out.println("Кнопка" + iString + " нажата!"));
-            hbox.getChildren().add(yourTake);
-		}
-		Label botTake = new Label(mainNode.GetText());
-		vbox.getChildren().add(botTake);
-		vbox.getChildren().add(hbox);
+        updateUI(mainNode);
+        
 		Scene scene = new Scene(vbox, Color.LIGHTSKYBLUE);
-		
 		Image icon = new Image("icon.jpg");
 		stage.setHeight(1000);
 		stage.setWidth(1000);
