@@ -1,10 +1,16 @@
 package nevermind;
 
 public class Answer {
-	Answer(String _text, DialogNode _node) {
-		text = _text;
-		node = _node;
+	Answer(String text, DialogNode node) {
+		this.text = text;
+		this.node = node;
 	}
-	public String text;
-	public DialogNode node;
+	protected final String text;
+	protected final DialogNode node;
+	String getText() {
+		return text;
+	}
+	DialogNode getNode() {
+		return node;
+	}
 }

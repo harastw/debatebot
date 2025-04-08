@@ -1,6 +1,5 @@
 package nevermind;
 
-import nevermind.DialogNode;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -19,17 +18,17 @@ public class ApplicationFX extends Application {
 		HBox hbox = new HBox(50);
 
 		ArrayList<Answer> answers;
-		answers = node.GetAnswers();
-		for (int i = 0; i < node.GetAnswers().size(); i++) {
+		answers = node.getAnswers();
+		for (int i = 0; i < answers.size(); i++) {
 			Answer currentAnswer = answers.get(i);
-            Button yourTake = new Button(currentAnswer.text);
+            Button yourTake = new Button(currentAnswer.getText());
             yourTake.setOnAction(event -> {
             	disableOldButtons(hbox);
-            	updateUI(currentAnswer.node); 
+            	updateUI(currentAnswer.getNode()); 
             });
             hbox.getChildren().add(yourTake);
 		}
-		Label botTake = new Label(node.GetText());
+		Label botTake = new Label(node.getText());
 		vbox.getChildren().add(botTake);
 		vbox.getChildren().add(hbox);
 	}
@@ -47,23 +46,12 @@ public class ApplicationFX extends Application {
     public void start(Stage stage) throws Exception {
 		vbox = new VBox(10);
 		
-		DialogNode mainNode = new DialogNode("Do you have a question?", false);
+		SqliteDBManipulator manipilator = new SqliteDBManipulator();
+		manipilator.loadData();
+		DialogNode node = manipilator.getRoot();
 		
-		DialogNode socialismCounter = new DialogNode("nazi is not marxoid", false);
-		Answer argimentFromSocialism = new Answer("Nazi is socialist!", socialismCounter);
-		mainNode.AddAnswer(argimentFromSocialism);
+		updateUI(node);  
 		
-		DialogNode leftistCounter = new DialogNode("why?", false);
-		Answer argumentFromLeftist = new Answer("but leftist btw", leftistCounter);
-		socialismCounter.AddAnswer(argumentFromLeftist);
-		
-		DialogNode marketCounter = new DialogNode("check germany modern market regulation and think", false);
-		Answer argumentFromMarket = new Answer("no free market btw", marketCounter);
-		socialismCounter.AddAnswer(argumentFromMarket);
-		
-		
-        updateUI(mainNode);
-        
 		Scene scene = new Scene(vbox, Color.LIGHTSKYBLUE);
 		Image icon = new Image("icon.jpg");
 		stage.setHeight(1000);

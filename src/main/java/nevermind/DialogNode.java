@@ -3,29 +3,23 @@ package nevermind;
 import java.util.ArrayList;
 
 public class DialogNode {
-	String text;
-	Boolean isLast;
-	ArrayList<Answer> answers;
+	protected final String text;
+	protected final ArrayList<Answer> answers;
 	
-	DialogNode(String _text, Boolean _isLast) {
-		text = _text;
-		isLast = _isLast;
+	DialogNode(String text) {
+		this.text = text;
 		answers = new ArrayList<>();
 	}
 	
-	public ArrayList<Answer> GetAnswers() {
+	public ArrayList<Answer> getAnswers() {
 		return answers;
 	}
 	
-	public Boolean IsLast() {
-		return isLast;
-	}
-	
-	public String GetText() {
+	public String getText() {
 		return text;
 	}
 	
-	public void AddAnswer(Answer answer) {
+	public void addAnswer(Answer answer) {
 		answers.add(answer);
 	}
 }
