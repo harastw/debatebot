@@ -1,12 +1,12 @@
 package nevermind;
 
 public class AnswerSql extends Answer {
-	private final String path;
-	AnswerSql(String text, DialogNode node, String path) {
+	private int parentDialogId;
+	AnswerSql(String text, DialogNode node, int parentDialogId) {
 		super(text, node);
-		this.path = path;
+		this.parentDialogId = parentDialogId;
 	}
-	public String getPath() {
-		return path;
+	public int getParentDialogId() {
+		return parentDialogId;
 	}
 }

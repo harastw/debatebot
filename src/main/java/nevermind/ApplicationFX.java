@@ -1,6 +1,7 @@
 package nevermind;
 
 import javafx.application.Application;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -9,10 +10,50 @@ import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ApplicationFX extends Application {
 	private VBox vbox;
+	private DialogNode node;
+	private ArrayList<DialogNode> nodes;
+	private SqliteDBManipulator manipulator;
+	
+	public ApplicationFX() {
+		manipulator = new SqliteDBManipulator();
+	}
+	
+	private void openEditWindow() {
+	    Stage dialog = new Stage();
+	    dialog.initModality(Modality.APPLICATION_MODAL);
+	    HBox hlayout = new HBox();
+	    AtomicBoolean fieldIsExist = new AtomicBoolean(false);
+	    for (int i = 0; i < nodes.size(); i++) {
+	    	int index = i;
+	        Button nodeButton = new Button(nodes.get(i).getText());
+	        nodeButton.setOnAction(event -> {
+	            if (!fieldIsExist.get()) {
+	                fieldIsExist.set(true);
+	                TextField answerField = new TextField();
+	                TextField nodeField = new TextField();
+	                Button add = new Button("add");
+	                add.setOnAction(event2 -> {
+	                	int childId = manipulator.writeNewNodeToDb(nodeField.getText());
+	                    manipulator.writeNewAnswerToDb(answerField.getText(), index + 1, childId);
+	                });
+	                hlayout.getChildren().addAll(answerField, nodeField, add);
+	            }
+	        });
+	        hlayout.getChildren().add(nodeButton);
+	    }
+	    Scene scene = new Scene(hlayout, 600, 400);
+	    dialog.setTitle("Editor");
+	    dialog.setScene(scene);
+	    dialog.showAndWait();
+	}
 	
 	private void updateUI(DialogNode node) {
 		HBox hbox = new HBox(50);
@@ -28,6 +69,8 @@ public class ApplicationFX extends Application {
             });
             hbox.getChildren().add(yourTake);
 		}
+		Button openButton = new Button("Открыть второе окно");
+		openButton.setOnAction(e -> openEditWindow());
 		Label botTake = new Label(node.getText());
 		vbox.getChildren().add(botTake);
 		vbox.getChildren().add(hbox);
@@ -46,9 +89,13 @@ public class ApplicationFX extends Application {
     public void start(Stage stage) throws Exception {
 		vbox = new VBox(10);
 		
-		SqliteDBManipulator manipilator = new SqliteDBManipulator();
-		manipilator.loadData();
-		DialogNode node = manipilator.getRoot();
+		manipulator.loadData();
+		nodes = manipulator.getNodes();
+		node = manipulator.getRoot();
+		
+		Button openButton = new Button("Edit db");
+		openButton.setOnAction(e -> openEditWindow());
+		vbox.getChildren().add(openButton);
 		
 		updateUI(node);  
 		
