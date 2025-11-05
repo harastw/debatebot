@@ -1,4 +1,4 @@
-package nevermind;
+package com.sark.dialog.javafx;
 
 import javafx.application.Application;
 import javafx.stage.Modality;
@@ -14,7 +14,9 @@ import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
+
+import com.sark.dialog.core.DialogNode;
+import com.sark.dialog.core.Answer;
 
 public class ApplicationFX extends Application {
 	private VBox vbox;

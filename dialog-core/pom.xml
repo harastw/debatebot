@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- Версия формата POM. Всегда 4.0.0 для современных проектов -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Наследуемся от родительского проекта (multi-module setup) -->
+    <parent>
+        <groupId>com.sark</groupId>
+        <artifactId>dialog-engine</artifactId>
+        <version>1.0.0</version>
+        <!-- Указываем путь к родительскому pom.xml (на уровень выше) -->
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <!-- Идентификатор этого модуля -->
+    <artifactId>dialog-core</artifactId>
+
+    <!-- Явно указываем packaging как jar (библиотека, не исполняемое приложение) -->
+    <packaging>jar</packaging>
+
+    <!-- Зависимости: НИКАКИХ внешних библиотек, кроме тестовых -->
+    <dependencies>
+        <!-- JUnit для unit-тестов (опционально, но рекомендуется) -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    
+     <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+</project>

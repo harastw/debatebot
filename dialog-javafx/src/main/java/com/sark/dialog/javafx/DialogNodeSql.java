@@ -1,4 +1,6 @@
-package nevermind;
+package com.sark.dialog.javafx;
+
+import com.sark.dialog.core.DialogNode;
 
 public class DialogNodeSql extends DialogNode {
 	private int id;

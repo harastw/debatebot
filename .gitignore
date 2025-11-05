@@ -1,0 +1,25 @@
+# Maven
+target/
+**/target/
+
+# IDE
+.idea/
+*.iml
+*.iws
+.vscode/
+.classpath
+.project
+.settings/
+
+# Databases
+*.db
+*.sqlite
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+

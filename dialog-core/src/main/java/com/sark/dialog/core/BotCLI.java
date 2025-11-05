@@ -1,10 +1,10 @@
-package nevermind;
+package com.sark.dialog.core;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BotCLI {
-	public void start() {
+	public static void main(String[] args) {
 		DialogNode mainNode = new DialogNode("Do you have a question?");
 		
 		DialogNode socialismCounter = new DialogNode("nazi is not marxoid");
@@ -21,16 +21,20 @@ public class BotCLI {
 		
 		DialogNode node = mainNode;
 		ArrayList<Answer> answers;
-		while (true) {
-			answers = node.getAnswers();
-		    System.out.println(node.getText());
-		    for (int i = 0; i < answers.size(); i++) {
-		    	Answer localAnswer = answers.get(i);
-		        System.out.println(localAnswer.text);
+		try (Scanner scanner = new Scanner(System.in)) {
+		    while (true) {
+		        answers = node.getAnswers();
+		        System.out.println(node.getText());
+		        for (int i = 0; i < answers.size(); i++) {
+		            Answer localAnswer = answers.get(i);
+		            System.out.println(localAnswer.text);
+		        }
+		        int index = scanner.nextInt();
+		        node = answers.get(index - 1).node;
+		        if (node == null) {
+		            break;
+		        }
 		    }
-		    Scanner scanner = new Scanner(System.in);
-		    int index = scanner.nextInt();
-		    node = answers.get(index - 1).node;
 		}
 	}
 }

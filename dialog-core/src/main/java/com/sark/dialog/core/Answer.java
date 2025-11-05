@@ -1,16 +1,16 @@
-package nevermind;
+package com.sark.dialog.core;
 
 public class Answer {
-	Answer(String text, DialogNode node) {
+	public Answer(String text, DialogNode node) {
 		this.text = text;
 		this.node = node;
 	}
 	protected final String text;
 	protected final DialogNode node;
-	String getText() {
+	public String getText() {
 		return text;
 	}
-	DialogNode getNode() {
+	public DialogNode getNode() {
 		return node;
 	}
 }

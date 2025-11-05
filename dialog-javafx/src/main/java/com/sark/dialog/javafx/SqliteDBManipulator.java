@@ -1,4 +1,4 @@
-package nevermind;
+package com.sark.dialog.javafx;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import com.sark.dialog.core.DialogNode;
 
 public class SqliteDBManipulator {
 	private ArrayList<DialogNodeSql> nodes;

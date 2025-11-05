@@ -1,4 +1,7 @@
-package nevermind;
+package com.sark.dialog.javafx;
+
+import com.sark.dialog.core.Answer;
+import com.sark.dialog.core.DialogNode;
 
 public class AnswerSql extends Answer {
 	private int parentDialogId;
