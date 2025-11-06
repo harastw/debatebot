@@ -10,7 +10,7 @@ public class HelloController {
     @GetMapping("/hello")
     public String hello() {
     	int counter = 0;
-    	for (int i = 0; i < 10; i++) {
+    	for (int i = 0; i < 5; i++) {
     		counter++;
     	}
     	String str = String.valueOf(counter);
